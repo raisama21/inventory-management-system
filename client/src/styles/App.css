@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .profile-label {
+    @apply font-semibold text-sm;
+  }
+}
+
+@layer components {
+  .input-style {
+    @apply w-full py-1 px-4 border border-neutral-1/40 rounded-lg;
+  }
+}
