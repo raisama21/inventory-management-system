@@ -122,9 +122,14 @@ export async function getInvoices() {
 }
 
 export async function getInvoice(invoiceId: string) {
+    const session = getSession();
+    if(!session) {
+        return;
+    }
+
     try {
         const [invoice] = await sql<Invoice[]>`
-            SELECT * FROM invoices WHERE id = ${invoiceId};    
+            SELECT * FROM invoices WHERE id = ${invoiceId} AND user_id = ${session.user.id};    
         `;
 
         return invoice;
@@ -202,7 +207,7 @@ export async function getPendingAmount() {
 
     try {
         const [total_price] = await sql<{ total_price: number }[]>`
-            SELECT total_price FROM invoices WHERE user_id = ${session.user.id} status = 'pending';
+            SELECT total_price FROM invoices WHERE user_id = ${session.user.id} AND status = 'pending';
         `;
 
         return total_price;
